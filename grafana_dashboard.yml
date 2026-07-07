@@ -4,8 +4,8 @@ metadata:
   name: rb44zw6
   namespace: default
   uid: 088cea35-0b15-41d7-8f0f-2a244a477279
-  resourceVersion: '1783423016325634'
-  generation: 11
+  resourceVersion: '1783448238769121'
+  generation: 13
   creationTimestamp: '2026-07-06T09:50:58Z'
   labels:
     grafana.app/deprecatedInternalID: '2412755068436480'
@@ -14,7 +14,7 @@ metadata:
     grafana.app/folder: ''
     grafana.app/saved-from-ui: Grafana v13.0.2 (3fcdbc5a)
     grafana.app/updatedBy: user:behij75drk3y8b
-    grafana.app/updatedTimestamp: '2026-07-07T11:16:56Z'
+    grafana.app/updatedTimestamp: '2026-07-07T18:17:18Z'
 spec:
   annotations:
     - kind: AnnotationQuery
@@ -32,6 +32,7 @@ spec:
         name: Annotations & Alerts
         builtIn: true
   cursorSync: 'Off'
+  description: Dashboard for the ESPHome-based room sensors.
   editable: true
   elements:
     panel-1:
@@ -578,7 +579,7 @@ spec:
             x: 0
             'y': 0
             width: 12
-            height: 10
+            height: 11
             element:
               kind: ElementReference
               name: panel-3
@@ -587,43 +588,43 @@ spec:
             x: 12
             'y': 0
             width: 12
-            height: 10
+            height: 11
             element:
               kind: ElementReference
               name: panel-1
         - kind: GridLayoutItem
           spec:
             x: 0
-            'y': 10
+            'y': 11
             width: 12
-            height: 10
+            height: 11
             element:
               kind: ElementReference
               name: panel-4
         - kind: GridLayoutItem
           spec:
             x: 12
-            'y': 10
+            'y': 11
             width: 12
-            height: 10
+            height: 11
             element:
               kind: ElementReference
               name: panel-2
         - kind: GridLayoutItem
           spec:
             x: 0
-            'y': 20
+            'y': 22
             width: 12
-            height: 10
+            height: 11
             element:
               kind: ElementReference
               name: panel-5
         - kind: GridLayoutItem
           spec:
             x: 12
-            'y': 20
+            'y': 22
             width: 12
-            height: 10
+            height: 11
             element:
               kind: ElementReference
               name: panel-6
@@ -651,7 +652,7 @@ spec:
       - 1d
     hideTimepicker: false
     fiscalYearStartMonth: 0
-  title: Room Sensors
+  title: Room sensors
   variables:
     - kind: QueryVariable
       spec:
