@@ -1,0 +1,107 @@
+#
+# ESPHome configuration for an SCD41 (CO2, temperature & humidity) sensor.
+# More at https://github.com/confirm/CO2-sensors
+#
+
+# ----- Core configuration -----
+
+esphome:
+  name: co2-sensor
+  friendly_name: CO2 Sensor
+
+esp32:
+  variant: esp32c3
+  framework:
+    type: esp-idf
+
+logger:
+  level: DEBUG
+
+api:
+  reboot_timeout: 0s  # Avoid automatic reboots since we scrape data via Prometheus
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_update_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  reboot_timeout: 0s  # Avoid automatic reboots since we scrape data via Prometheus
+  ap:
+    ssid: CO2 Sensor Fallback Hotspot
+    password: !secret fallback_hotspot_password
+
+captive_portal:
+
+# ----- Components -----
+
+prometheus:
+
+font:
+  - id: display_font
+    file:
+      type: gfonts
+      family: Source Code Pro
+    size: 22
+
+i2c:
+  sda: GPIO5
+  scl: GPIO6
+  scan: true
+
+sensor:
+  - platform: scd4x
+    update_interval: 10s
+    co2:
+      name: "CO2"
+      id: co2
+      filters:
+        - sliding_window_moving_average:
+            window_size: 6
+            send_every: 1
+    temperature:
+      name: "Temperature"
+      id: temperature
+      filters:
+        - sliding_window_moving_average:
+            window_size: 6
+            send_every: 1
+    humidity:
+      name: "Humidity"
+      id: humidity
+      filters:
+        - sliding_window_moving_average:
+            window_size: 6
+            send_every: 1
+
+display:
+  - platform: ssd1306_i2c
+    model: SSD1306_72X40
+    id: oled
+    address: 0x3c
+    pages:
+      - id: oled_page1
+        lambda: |
+          auto textColor = id(co2).state >= 1000 ? COLOR_OFF : COLOR_ON;
+          if(textColor == COLOR_OFF) { it.fill(COLOR_ON); }
+          it.printf(36, -5, id(display_font), textColor, TextAlign::TOP_CENTER, "%.0f", id(co2).state);
+          it.printf(36, 39, id(display_font), textColor, TextAlign::BASELINE_CENTER, "PPM");
+      - id: oled_page2
+        lambda: |
+          it.printf(36, -5, id(display_font), TextAlign::TOP_CENTER, "%.1f", id(temperature).state);
+          it.printf(36, 39, id(display_font), TextAlign::BASELINE_CENTER, "°C");
+      - id: oled_page3
+        lambda: |
+          it.printf(36, -5, id(display_font), TextAlign::TOP_CENTER, "%.1f", id(humidity).state);
+          it.printf(36, 39, id(display_font), TextAlign::BASELINE_CENTER, "%% RH");
+
+# ----- Automations -----
+
+interval:
+  - interval: 3s
+    then:
+      - display.page.show_next: oled
+      - component.update: oled
