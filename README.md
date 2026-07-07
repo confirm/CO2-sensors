@@ -5,6 +5,10 @@ Data is exposed via [ESPHome](https://esphome.io/) and scraped with [Prometheus]
 
 ![Running sensor](img/real_running.jpg)
 
+> [!important]
+> Prometheus scraps the metrics directly from the ESP32 and not from the ESPHome server.  
+> Thus the ESPHome server is only required to build & flash the image, but not for the operational part.
+
 ## Features
 
 - CO2, temperature, and humidity readings from an SCD41
@@ -47,7 +51,7 @@ Connect the SCD41 to the ESP like this:
 | SDA | GPIO5 |
 | SCL | GPIO6 |
 
-## Software setup
+## ESPHome setup
 
 1. Install [ESPHome](https://esphome.io/guides/getting_started_command_line.html).
 2. Create the required secrets, such as:
@@ -57,6 +61,7 @@ Connect the SCD41 to the ESP like this:
    - `ota_update_password`: The password for the OTA updates
    - `fallback_hotspot_password`: The password for the WiFi fallback hotspots
 3. Create a new device and use the [`esphome_sensor.yml`](`esphome_sensor.yml`) as a template
+4. Build and flash the firmware image to the ESP32
 
 The device exposes a `/metrics` endpoint (via the ESPHome [Prometheus component](https://esphome.io/components/prometheus/)) that a Prometheus server can scrape.
 
@@ -66,5 +71,5 @@ The [`grafana_dashboard.yml`](grafana_dashboard.yml) contains a dashboard defini
 
 ![Grafana dashboard](img/grafana.png)
 
-> [!HINT] Import
+> [!NOTE]
 > Import the [`grafana_dashboard.yml`](grafana_dashboard.yml) into Grafana under Dashboards → Import.
