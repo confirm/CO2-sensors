@@ -27,13 +27,19 @@ Data is exposed via [ESPHome](https://esphome.io/) and scraped with [Prometheus]
 
 The case and lid are provided as `.3mf` files, ready to slice and print.
 
+### Sketch
+
+![Sketch](img/sketch.png)
+
+### 3D case
+
 | [Case](case.3mf) | [Lid](lid.3mf) |
 | --- | --- |
 | ![Case top](img/case_top.png) | ![Lid top](img/lid_top.png) |
 | ![Case ortho](img/case_ortho.png) | ![Lid ortho](img/lid_ortho.png) |
 | | ![Lid bottom](img/lid_bottom.png) |
 
-Assembled sensors:
+### Assembled sensors
 
 | | | |
 | --- | --- | --- |
