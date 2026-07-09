@@ -5,10 +5,6 @@ Data is exposed via [ESPHome](https://esphome.io/) and scraped with [Prometheus]
 
 ![Running sensor](img/real_running.jpg)
 
-> [!important]
-> Prometheus scraps the metrics directly from the ESP32 and not from the ESPHome server.  
-> Thus the ESPHome server is only required to build & flash the image, but not for the operational part.
-
 ## Features
 
 - CO2, temperature, and humidity readings from an SCD41
@@ -70,6 +66,17 @@ Connect the SCD41 to the ESP like this:
 4. Build and flash the firmware image to the ESP32
 
 The device exposes a `/metrics` endpoint (via the ESPHome [Prometheus component](https://esphome.io/components/prometheus/)) that a Prometheus server can scrape.
+
+> [!important]
+> Prometheus scraps the metrics directly from the ESP32 and **not** from the web-based [ESPHome Device Builder](https://esphome.io/guides/getting_started_command_line/#bonus-esphome-device-builder).  
+> Thus ESPHome is only used to build & flash the image and the «Device Builder» isn't required for operations.  
+> 
+> However, maintaining the devices is much easier via «Device Builder» because:
+> 
+> - You've ESPHome in a central instance, i.e. in a simple Docker container
+> - It's much more convenient, as you've a simple management interface for all of your devices
+> - ESPs can be flashed from your machine via your browser (thanks to [Web Serial API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API))
+> - If you use your browser, you don't have to run the dockerised ESPHome with critical permissions, and you don't have to pass the USB device into the container
 
 ## Grafana dashboard
 
