@@ -68,7 +68,7 @@ Connect the SCD41 to the ESP like this:
 The device exposes a `/metrics` endpoint (via the ESPHome [Prometheus component](https://esphome.io/components/prometheus/)) that a Prometheus server can scrape.
 
 > [!important]
-> Prometheus scraps the metrics directly from the ESP32 and **not** from the web-based [ESPHome Device Builder](https://esphome.io/guides/getting_started_command_line/#bonus-esphome-device-builder).  
+> Prometheus scraps the metrics directly from the ESP32 and **not** from the web-based [ESPHome Device Builder](https://esphome.io/guides/getting_started_command_line/#bonus-esphome-device-builder).
 > Thus ESPHome is only used to build & flash the image and the «Device Builder» isn't required for operations.  
 > 
 > However, maintaining the devices is much easier via «Device Builder» because:
